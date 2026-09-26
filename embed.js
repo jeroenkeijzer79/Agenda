@@ -47,16 +47,15 @@ const isPast = e => e.date && new Date(
 let allEvents = [];
 
 function render() {
-  const events = futureOnly?.checked
-    ? allEvents.filter(e => !isPast(e))
-    : allEvents;
+  const upcoming = allEvents.filter(e => !isPast(e));
+  const pastEvents = allEvents.filter(e => isPast(e));
 
-  if (!events.length) {
+  if (!upcoming.length && (!pastEvents.length || futureOnly?.checked)) {
     list.innerHTML = '<div class="message">Geen optredens gepland.</div>';
     return;
   }
 
-  list.innerHTML = events.map(e => {
+  const renderEvent = e => {
     const f = fmt(e.date);
     const past = isPast(e);
     const hasDetails = !!(e.description || e.url || e.imageUrl);
@@ -97,7 +96,12 @@ function render() {
         ` : ""}
       </article>
     `;
-  }).join("");
+  };
+
+  const sections = [];
+  if (upcoming.length) sections.push('<section class="event-section"><h2 class="event-section-title">Aankomende optredens</h2><div class="event-list event-section-list">' + upcoming.map(renderEvent).join("") + '</div></section>');
+  if (!futureOnly?.checked && pastEvents.length) sections.push('<section class="event-section past-section"><h2 class="event-section-title">Optredens die geweest zijn</h2><div class="event-list event-section-list">' + pastEvents.map(renderEvent).join("") + '</div></section>');
+  list.innerHTML = sections.join("");
 
   list.querySelectorAll(".event-expand").forEach(button => {
     button.addEventListener("click", () => {
