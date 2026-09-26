@@ -70,7 +70,7 @@ async function geocodeEvent(event){
 export async function showAgendaMap(container,events){
   container.innerHTML='<div class="agenda-map-loading">Locaties worden opgezocht…</div>';
   const L=await loadLeaflet();
-  const map=L.map(container,{scrollWheelZoom:false}).setView([52.1,5.3],7);
+  const map=L.map(container,{scrollWheelZoom:false,attributionControl:false}).setView([52.1,5.3],7);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
     maxZoom:19,attribution:'&copy; OpenStreetMap-bijdragers'
   }).addTo(map);
