@@ -78,4 +78,4 @@ h2{margin:0;font-size:20px}
 .embed-page .event-expand[aria-expanded="true"] + .event-details{margin-top:4px;padding-top:12px;border-top:1px solid #ddd}
 .embed-page .event-description{font-size:14px;line-height:1.6;font-weight:400;overflow-wrap:anywhere}
 .embed-page .event-link{display:inline-block;margin-top:12px}
-@media(max-width:600px){.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr) 28px}}
+@media(max-width:600px){.embed-page .event{grid-template-columns:44px minmax(0,1fr) 28px}}
