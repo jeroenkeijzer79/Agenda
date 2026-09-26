@@ -31,6 +31,8 @@
       <label>Tijd<input id="event-time" type="time" required></label>
       <label class="full">Locatie<input id="event-location" type="text" placeholder="Bijv. Café De Zon, Hengelo" required></label>
       <label class="full">URL<input id="event-url" type="url" placeholder="https://..." required></label>
+      <label class="full">Beschrijving<textarea id="event-description" rows="7" placeholder="Lange beschrijving van het optreden..."></textarea></label>
+      <label class="full">Afbeelding<input id="event-image" type="file" accept="image/*"><span id="image-current" class="field-hint"></span></label>
       <div class="form-actions full"><button id="save-event" class="primary-button" type="submit">Opslaan</button><button id="cancel-event-2" class="secondary-button" type="button">Annuleren</button></div>
     </div>
   </form>
@@ -41,7 +43,7 @@
   <p id="app-error" class="error" hidden></p>
 </section>
 </main>
-<footer class="version">v1.2</footer>
-<script type="module" src="app.js?v=3"></script>
+<footer class="version">v1.3</footer>
+<script type="module" src="app.js?v=4"></script>
 </body>
 </html>
