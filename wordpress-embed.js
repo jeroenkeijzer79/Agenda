@@ -8,7 +8,11 @@ if (!root) throw new Error("Agenda container #agenda-wordpress ontbreekt.");
 
 const list = root.querySelector(".agenda-wp-list");
 const futureOnly = root.querySelector(".agenda-wp-future");
-const mapButton = root.querySelector(".agenda-wp-map-button");
+const mapControls=document.createElement("div");
+mapControls.className="agenda-wp-map-controls";
+mapControls.innerHTML='<button type="button" class="agenda-wp-map-button">Kaart</button><div class="agenda-wp-map-panel" hidden><div class="agenda-wp-map-heading"><strong>Alle optredens op de kaart</strong><button type="button" class="agenda-wp-map-close" aria-label="Sluiten">×</button></div><div class="agenda-wp-map"></div></div>';
+root.insertBefore(mapControls,list);
+const mapButton = mapControls.querySelector(".agenda-wp-map-button");
 const db = getFirestore(initializeApp(firebaseConfig));
 
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
