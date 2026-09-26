@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
 
 const $=id=>document.getElementById(id);
@@ -20,7 +20,7 @@ function render(events){
  if(!visible.length){list.innerHTML='<div class="message">Nog geen optredens.</div>';return}
  list.innerHTML=visible.map(e=>{
   const f=formatDate(e.date);
-  const details=e.description?'<div class="event-details" hidden><div class="event-description">'+esc(e.description).replace(/\\n/g,"<br>")+'</div></div>':"";
+  const details=e.description?'<div class="event-details" hidden><div class="event-description">'+esc(e.description).replace(/\n/g,"<br>")+'</div></div>':"";
   const toggle=details?'<button class="event-toggle" data-toggle type="button">Meer tonen ↓</button>':'';
   return '<article class="event'+(isPast(e)?" past":"")+'"><div class="event-date"><span class="event-day">'+esc(f.day)+'</span><span class="event-month">'+esc(f.month)+'</span></div><div class="event-main"><div class="event-time">'+esc(e.time||"")+'</div><p class="event-name">'+esc(e.name||"")+'</p><p class="event-location">'+esc(e.location||"")+'</p>'+(e.url?'<a class="event-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Meer informatie ↗</a>':'')+toggle+details+'</div><div class="event-actions"><button class="small-button" data-edit="'+esc(e.id)+'" type="button" aria-label="Bewerken">✎</button><button class="small-button" data-delete="'+esc(e.id)+'" type="button" aria-label="Verwijderen">🗑</button></div></article>'
  }).join("");
