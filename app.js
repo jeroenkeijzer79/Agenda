@@ -29,6 +29,21 @@ function render(events){
  list.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=()=>{const d=b.nextElementSibling;d.hidden=!d.hidden;b.textContent=d.hidden?"Meer tonen ↓":"Minder tonen ↑"});
 }
 
+function startEdit(e){
+ if(!e)return;
+ editingId=e.id;
+ $("event-date").value=e.date||"";
+ $("event-time").value=e.time||"";
+ $("event-name").value=e.name||"";
+ $("event-location").value=e.location||"";
+ $("event-place").value=e.place||"";
+ $("event-url").value=e.url||"";
+ $("event-description").value=e.description||"";
+ $("form-title").textContent="Optreden bewerken";
+ $("event-form").hidden=false;
+ $("event-form").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
 function resetForm(){editingId=null;$("event-form").reset();$("form-title").textContent="Nieuw optreden";$("event-form").hidden=true}
 
 async function removeEvent(id){
