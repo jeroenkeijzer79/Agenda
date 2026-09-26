@@ -79,3 +79,6 @@ h2{margin:0;font-size:20px}
 .embed-page .event-description{font-size:14px;line-height:1.6;font-weight:400;overflow-wrap:anywhere}
 .embed-page .event-link{display:inline-block;margin-top:12px}
 @media(max-width:600px){.embed-page .event{grid-template-columns:44px minmax(0,1fr) 28px}}
+
+.event-image{display:block;width:100%;max-width:520px;height:auto;margin:0 0 12px;border-radius:8px;object-fit:cover}
+.embed-page .event-image{max-width:100%;margin:0 0 10px;border-radius:6px}
