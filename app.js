@@ -16,10 +16,15 @@ function isPast(e){if(!e.date)return false;return new Date(e.date+"T"+(e.time||"
 
 function render(events){
  const list=$("event-list");
- const visible=$("future-only").checked?events.filter(e=>!isPast(e)):events;
+ const futureOnly=$("future-only").checked;
+ const upcoming=events.filter(e=>!isPast(e));
+ const pastEvents=events.filter(e=>isPast(e));
+ const visible=futureOnly?upcoming:events;
  $("event-count").textContent=visible.length+" "+(visible.length===1?"optreden":"optredens");
  if(!visible.length){list.innerHTML='<div class="message">Nog geen optredens.</div>';return}
- list.innerHTML=visible.map(e=>{
+
+ const renderEvent=e=>{
+
   const f=formatDate(e.date);
   const details=(e.description||e.imageUrl)?'<div class="event-details" hidden>'+(e.imageUrl?'<img class="event-image" src="'+esc(e.imageUrl)+'" alt="" loading="lazy">':"")+(e.description?'<div class="event-description">'+esc(e.description).replace(/\n/g,"<br>")+'</div>':"")+'</div>':"";
   const toggle=details?'<button class="event-toggle" data-toggle type="button">Meer tonen ↓</button>':'';
