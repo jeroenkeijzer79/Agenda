@@ -3,13 +3,11 @@
 #agenda-wordpress .agenda-wp-filter{display:flex;align-items:center;gap:8px;margin:0 0 14px;padding:0;font-size:13px;line-height:1.4;font-weight:700}
 #agenda-wordpress .agenda-wp-filter input{width:16px;height:16px;min-width:16px;margin:0;padding:0}
 #agenda-wordpress .agenda-wp-list{display:grid;gap:8px;width:100%;margin:0;padding:0}
-#agenda-wordpress .agenda-wp-item{display:grid;grid-template-columns:52px 48px minmax(0,1fr) 30px;gap:10px;align-items:center;width:100%;margin:0;padding:9px 10px;background:#fff;border:1px solid #ddd;border-radius:8px;color:#171717;font-family:inherit;line-height:1.2;text-align:left;transition:background-color .15s ease,opacity .15s ease}
+#agenda-wordpress .agenda-wp-item{display:grid;grid-template-columns:52px minmax(0,1fr) 30px;gap:10px;align-items:center;width:100%;margin:0;padding:9px 10px;background:#fff;border:1px solid #ddd;border-radius:8px;color:#171717;font-family:inherit;line-height:1.2;text-align:left;transition:background-color .15s ease,opacity .15s ease}
 #agenda-wordpress .agenda-wp-item:hover{background:#f5f5f5}
 #agenda-wordpress .agenda-wp-date{margin:0;padding:0;text-align:center;font-weight:700;text-transform:uppercase;line-height:1}
 #agenda-wordpress .agenda-wp-day{display:block;margin:0;padding:0;font-size:25px;line-height:1;letter-spacing:-.03em}
 #agenda-wordpress .agenda-wp-month{display:block;margin:4px 0 0;padding:0;font-size:10px;line-height:1;letter-spacing:.1em;opacity:.55}
-#agenda-wordpress .agenda-wp-thumb{display:block;width:48px;height:48px;margin:0;padding:0;border:0;border-radius:6px;object-fit:cover}
-#agenda-wordpress .agenda-wp-thumb-empty{background:#eee}
 #agenda-wordpress .agenda-wp-main{min-width:0;margin:0;padding:0}
 #agenda-wordpress .agenda-wp-time,#agenda-wordpress .agenda-wp-name,#agenda-wordpress .agenda-wp-location{display:block;margin:0;padding:0;overflow:hidden;text-overflow:ellipsis}
 #agenda-wordpress .agenda-wp-time{margin-bottom:3px;font-size:12px;line-height:1.2;font-weight:700;opacity:.55}
@@ -21,10 +19,9 @@
 #agenda-wordpress .agenda-wp-details{grid-column:1/-1;min-width:0;max-height:0;overflow:hidden;margin:0;padding:0;border-top:0;opacity:0;transition:max-height .35s ease,opacity .25s ease}
 #agenda-wordpress .agenda-wp-details-inner{min-width:0;margin:0;padding:12px 4px 4px;border-top:1px solid #ddd}
 #agenda-wordpress .agenda-wp-description{margin:0;padding:0;font-size:14px;line-height:1.6;font-weight:400;overflow-wrap:anywhere}
-#agenda-wordpress .agenda-wp-image{display:block;width:min(100%,520px);max-height:360px;margin:12px 0;padding:0;border:0;border-radius:8px;object-fit:cover}
 #agenda-wordpress .agenda-wp-link{display:inline-block;margin:12px 0 0;padding:0;color:inherit;font-size:12px;line-height:1.4;text-decoration:none;opacity:.65}
 #agenda-wordpress .agenda-wp-link:hover{text-decoration:underline}
 #agenda-wordpress .agenda-wp-past{opacity:.48}
 #agenda-wordpress .agenda-wp-past:hover{opacity:.7}
 #agenda-wordpress .agenda-wp-message{width:100%;margin:0;padding:14px;text-align:center;font-size:13px;line-height:1.4;color:#777}
-@media(max-width:600px){#agenda-wordpress .agenda-wp-item{grid-template-columns:44px 40px minmax(0,1fr) 28px;gap:9px;padding:8px}#agenda-wordpress .agenda-wp-thumb{width:40px;height:40px}#agenda-wordpress .agenda-wp-day{font-size:22px}#agenda-wordpress .agenda-wp-name{font-size:14px}#agenda-wordpress .agenda-wp-location{font-size:12px}}
+@media(max-width:600px){#agenda-wordpress .agenda-wp-item{grid-template-columns:44px minmax(0,1fr) 28px;gap:9px;padding:8px}#agenda-wordpress .agenda-wp-day{font-size:22px}#agenda-wordpress .agenda-wp-name{font-size:14px}#agenda-wordpress .agenda-wp-location{font-size:12px}}
