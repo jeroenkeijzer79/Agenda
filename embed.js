@@ -68,6 +68,8 @@ function render() {
           <span class="event-month">${esc(f.month)}</span>
         </div>
 
+        <div class="event-thumb">${e.imageUrl ? `<img src="${esc(e.imageUrl)}" alt="" loading="lazy">` : ""}</div>
+
         <div class="event-main">
           <div class="event-time">${esc(e.time || "")}</div>
           <p class="event-name">${esc(e.name || "")}</p>
