@@ -24,17 +24,25 @@ function render(events){
  if(!visible.length){list.innerHTML='<div class="message">Nog geen optredens.</div>';return}
 
  const renderEvent=e=>{
-
   const f=formatDate(e.date);
   const details=(e.description||e.imageUrl)?'<div class="event-details" hidden>'+(e.imageUrl?'<img class="event-image" src="'+esc(e.imageUrl)+'" alt="" loading="lazy">':"")+(e.description?'<div class="event-description">'+esc(e.description).replace(/\n/g,"<br>")+'</div>':"")+'</div>':"";
   const toggle=details?'<button class="event-toggle" data-toggle type="button">Meer tonen ↓</button>':'';
-  return '<article class="event'+(isPast(e)?" past":"")+'"><div class="event-date"><span class="event-day">'+esc(f.day)+'</span><span class="event-month">'+esc(f.month)+'</span></div><div class="event-main"><div class="event-time">'+esc(e.time||"")+'</div><p class="event-name">'+esc(e.name||"")+'</p><p class="event-location">'+esc(e.location||"")+(e.place?" · "+esc(e.place):"")+'</p>'+(e.url?'<a class="event-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Meer informatie ↗</a>':'')+toggle+details+'</div><div class="event-actions"><button class="small-button" data-edit="'+esc(e.id)+'" type="button" aria-label="Bewerken">✎</button><button class="small-button" data-delete="'+esc(e.id)+'" type="button" aria-label="Verwijderen">🗑</button></div></article>'
- }).join("");
- list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>startEdit(events.find(e=>e.id===b.dataset.edit)));
+  return '<article class="event'+(isPast(e)?" past":"")+'"><div class="event-date"><span class="event-day">'+esc(f.day)+'</span><span class="event-month">'+esc(f.month)+'</span></div><div class="event-main"><div class="event-time">'+esc(e.time||"")+'</div><p class="event-name">'+esc(e.name||"")+'</p><p class="event-location">'+esc(e.location||"")+(e.place?" · "+esc(e.place):"")+'</p>'+(e.url?'<a class="event-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Meer informatie ↗</a>':'')+toggle+details+'</div><div class="event-actions"><button class="small-button" data-edit="'+esc(e.id)+'" type="button" aria-label="Bewerken">✎</button><button class="small-button" data-delete="'+esc(e.id)+'" type="button" aria-label="Verwijderen">🗑</button></div></article>';
+ };
+
+ const sections=[];
+ if(upcoming.length){
+  sections.push('<section class="event-section"><h2 class="event-section-title">Aankomende optredens</h2><div class="event-list event-section-list">'+upcoming.map(renderEvent).join("")+'</div></section>');
+ }
+ if(!futureOnly && pastEvents.length){
+  sections.push('<section class="event-section past-section"><h2 class="event-section-title">Optredens die geweest zijn</h2><div class="event-list event-section-list">'+pastEvents.map(renderEvent).join("")+'</div></section>');
+ }
+ list.innerHTML=sections.join("");
+
+ list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>startEdit(visible.find(e=>e.id===b.dataset.edit)));
  list.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>removeEvent(b.dataset.delete));
  list.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=()=>{const d=b.nextElementSibling;d.hidden=!d.hidden;b.textContent=d.hidden?"Meer tonen ↓":"Minder tonen ↑"});
 }
-
 function startEdit(e){
  if(!e)return;
  editingId=e.id;
