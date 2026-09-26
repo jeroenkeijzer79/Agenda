@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
+import { showAgendaMap } from "./map.js";
 
 const db = getFirestore(initializeApp(firebaseConfig));
 const list = document.getElementById("event-list");
@@ -139,6 +140,9 @@ function render() {
 
   requestAnimationFrame(sendHeight);
 }
+
+document.getElementById("show-map")?.addEventListener("click",async()=>{const panel=document.getElementById("agenda-map-panel");panel.hidden=false;await showAgendaMap(document.getElementById("agenda-map"),allEvents);});
+document.getElementById("close-map")?.addEventListener("click",()=>document.getElementById("agenda-map-panel").hidden=true);
 
 futureOnly?.addEventListener("change", () => {
   render();
