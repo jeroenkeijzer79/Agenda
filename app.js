@@ -20,7 +20,7 @@ function render(events){
  if(!visible.length){list.innerHTML='<div class="message">Nog geen optredens.</div>';return}
  list.innerHTML=visible.map(e=>{
   const f=formatDate(e.date);
-  const details=e.description?'<div class="event-details" hidden><div class="event-description">'+esc(e.description).replace(/\n/g,"<br>")+'</div></div>':"";
+  const details=(e.description||e.imageUrl)?'<div class="event-details" hidden>'+(e.imageUrl?'<img class="event-image" src="'+esc(e.imageUrl)+'" alt="" loading="lazy">':"")+(e.description?'<div class="event-description">'+esc(e.description).replace(/\n/g,"<br>")+'</div>':"")+'</div>':"";
   const toggle=details?'<button class="event-toggle" data-toggle type="button">Meer tonen ↓</button>':'';
   return '<article class="event'+(isPast(e)?" past":"")+'"><div class="event-date"><span class="event-day">'+esc(f.day)+'</span><span class="event-month">'+esc(f.month)+'</span></div><div class="event-main"><div class="event-time">'+esc(e.time||"")+'</div><p class="event-name">'+esc(e.name||"")+'</p><p class="event-location">'+esc(e.location||"")+'</p>'+(e.url?'<a class="event-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Meer informatie ↗</a>':'')+toggle+details+'</div><div class="event-actions"><button class="small-button" data-edit="'+esc(e.id)+'" type="button" aria-label="Bewerken">✎</button><button class="small-button" data-delete="'+esc(e.id)+'" type="button" aria-label="Verwijderen">🗑</button></div></article>'
  }).join("");
@@ -39,6 +39,7 @@ function startEdit(e){
  $("event-place").value=e.place||"";
  $("event-url").value=e.url||"";
  $("event-description").value=e.description||"";
+ $("event-image-url").value=e.imageUrl||"";
  $("form-title").textContent="Optreden bewerken";
  $("event-form").hidden=false;
  $("event-form").scrollIntoView({behavior:"smooth",block:"start"});
@@ -61,7 +62,7 @@ $("event-form").addEventListener("submit",async e=>{
  e.preventDefault();show("app-error","");
  const save=$("save-event");save.disabled=true;save.textContent="Opslaan…";
  try{
-  const data={date:$("event-date").value,time:$("event-time").value,name:$("event-name").value.trim(),location:$("event-location").value.trim(),place:$("event-place").value.trim(),url:$("event-url").value.trim(),description:$("event-description").value.trim(),updatedAt:Date.now()};
+  const data={date:$("event-date").value,time:$("event-time").value,name:$("event-name").value.trim(),location:$("event-location").value.trim(),place:$("event-place").value.trim(),url:$("event-url").value.trim(),description:$("event-description").value.trim(),imageUrl:$("event-image-url").value.trim(),updatedAt:Date.now()};
   if(editingId)await updateDoc(doc(db,"optredens",editingId),data);else await addDoc(collection(db,"optredens"),{...data,createdAt:Date.now()});
   resetForm();
  }catch(err){show("app-error",err.message)}finally{save.disabled=false;save.textContent="Opslaan"}
