@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -34,11 +34,11 @@ function resetForm(){editingId=null;editingImageUrl="";$("event-form").reset();$
 function startEdit(e){if(!e)return;editingId=e.id;editingImageUrl=e.imageUrl||"";$("form-title").textContent="Optreden wijzigen";$("event-date").value=e.date||"";$("event-time").value=e.time||"";$("event-name").value=e.name||"";$("event-location").value=e.location||"";$("event-url").value=e.url||"";$("event-description").value=e.description||"";$("event-image").value="";$("image-current").textContent=e.imageUrl?"Huidige afbeelding blijft behouden als je geen nieuwe kiest.":"";$("event-form").hidden=false;$("event-form").scrollIntoView({behavior:"smooth",block:"nearest"})}
 async function removeEvent(id){
  if(!confirm("Dit optreden verwijderen?"))return;
- try{const snap=await import("https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js");const eventDoc=await snap.getDoc(doc(db,"optredens",id));const data=eventDoc.exists()?eventDoc.data():{};await deleteDoc(doc(db,"optredens",id));if(data.imagePath){try{await deleteObject(ref(storage,data.imagePath))}catch(_){}}
+ try{const eventDoc=await getDoc(doc(db,"optredens",id));const data=eventDoc.exists()?eventDoc.data():{};await deleteDoc(doc(db,"optredens",id));if(data.imagePath){try{await deleteObject(ref(storage,data.imagePath))}catch(_){}}
  }catch(e){show("app-error",e.message)}
 }
 
-$("google-login").addEventListener("click",async ()=>{show("auth-error","");$("google-login").disabled=true;$("google-login").textContent="Verbinden met Google…";try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(err){console.error("Google login error:",err);$("google-login").disabled=false;$("google-login").textContent="Inloggen met Google";const messages={"auth/unauthorized-domain":"Deze website is nog niet toegestaan in Firebase Authentication. Voeg jeroenkeijzer79.github.io toe aan de geautoriseerde domeinen in Firebase.","auth/operation-not-allowed":"Google-login is nog niet ingeschakeld in Firebase Authentication.","auth/popup-blocked":"De browser blokkeert het Google-loginvenster. Sta pop-ups toe voor deze website en probeer opnieuw.","auth/popup-closed-by-user":"Het Google-loginvenster is gesloten voordat het inloggen klaar was.","auth/cancelled-popup-request":"Er was al een Google-loginvenster geopend. Sluit dat venster en probeer opnieuw.","auth/web-storage-unsupported":"De browser blokkeert de benodigde browseropslag. Probeer een normaal browservenster of een andere browser."};show("auth-error",messages[err.code]||("Inloggen met Google mislukt: "+(err.message||err.code||"onbekende fout")))}});
+$("google-login").addEventListener("click",async ()=>{show("auth-error","");$("google-login").disabled=true;$("google-login").textContent="Verbinden met Google…";try{const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});await signInWithPopup(auth,provider)}catch(err){console.error("Google login error:",err);$("google-login").disabled=false;$("google-login").textContent="Inloggen met Google";const messages={"auth/unauthorized-domain":"Deze website is nog niet toegestaan in Firebase Authentication. Voeg jeroenkeijzer79.github.io toe aan de geautoriseerde domeinen in Firebase.","auth/operation-not-allowed":"Google-login is nog niet ingeschakeld in Firebase Authentication.","auth/popup-blocked":"De browser blokkeert het Google-loginvenster. Sta pop-ups toe voor deze website en probeer opnieuw.","auth/popup-closed-by-user":"Het Google-loginvenster is gesloten voordat het inloggen klaar was.","auth/cancelled-popup-request":"Er was al een Google-loginvenster geopend. Sluit dat venster en probeer opnieuw.","auth/web-storage-unsupported":"De browser blokkeert de benodigde browseropslag. Probeer een normaal browservenster of een andere browser."};show("auth-error",messages[err.code]||("Inloggen met Google mislukt: "+(err.message||err.code||"onbekende fout")))}});
 
 $("logout").onclick=()=>signOut(auth);
 $("new-event").onclick=()=>{$("event-form").hidden=false;$("form-title").textContent="Nieuw optreden";editingId=null;editingImageUrl="";$("event-form").reset();$("image-current").textContent=""};
@@ -66,5 +66,5 @@ $("event-form").addEventListener("submit",async e=>{
 onAuthStateChanged(auth,user=>{
  $("auth-view").hidden=!!user;$("admin-view").hidden=!user;
  if(unsubscribe){unsubscribe();unsubscribe=null}
- if(user){const q=query(collection(db,"optredens"),orderBy("date"),orderBy("time"));unsubscribe=onSnapshot(q,snap=>{allEvents=sortedEvents(snap.docs.map(d=>({id:d.id,...d.data()})));render(allEvents)},err=>show("app-error",err.message))}
+ if(user){const q=query(collection(db,"optredens"),orderBy("date"));unsubscribe=onSnapshot(q,snap=>{allEvents=sortedEvents(snap.docs.map(d=>({id:d.id,...d.data()})));render(allEvents)},err=>{console.error("Firestore load error:",err);show("app-error","De optredens konden niet worden geladen: "+(err.message||"onbekende fout"))})}
 });
