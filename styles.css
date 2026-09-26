@@ -52,3 +52,13 @@ h2{margin:0;font-size:20px}
 .event-location{font-size:14px}
 .event-link{font-size:11px}
 }
+
+.form-grid textarea{width:100%;padding:11px;border:1px solid #ccc;border-radius:8px;background:#fff;font:inherit;resize:vertical;line-height:1.5}
+.form-grid input[type="file"]{padding:9px 11px}
+.field-hint{font-size:11px;font-weight:400;opacity:.55}
+.event-main{min-width:0}
+.event-toggle{display:block;margin-top:7px;padding:0;border:0;background:transparent;font:inherit;font-size:12px;font-weight:700;opacity:.55;cursor:pointer}
+.event-toggle:hover{text-decoration:underline;opacity:1}
+.event-details{margin-top:12px;padding-top:12px;border-top:1px solid #ddd}
+.event-image{display:block;width:min(100%,520px);max-height:360px;object-fit:cover;border-radius:8px;margin-bottom:12px}
+.event-description{font-size:14px;line-height:1.6;font-weight:400;white-space:normal;overflow-wrap:anywhere}
