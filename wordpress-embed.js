@@ -34,14 +34,15 @@ const isPast = event => event.date && new Date(
 let allEvents = [];
 
 function render() {
-  const events = futureOnly.checked ? allEvents.filter(event => !isPast(event)) : allEvents;
+  const upcoming = allEvents.filter(event => !isPast(event));
+  const pastEvents = allEvents.filter(event => isPast(event));
 
-  if (!events.length) {
+  if (!upcoming.length && (!pastEvents.length || futureOnly.checked)) {
     list.innerHTML = '<div class="agenda-wp-message">Geen optredens gepland.</div>';
     return;
   }
 
-  list.innerHTML = events.map(event => {
+  const renderEvent = event => {
     const date = formatDate(event.date);
     const past = isPast(event);
     const hasDetails = !!(event.description || event.url || event.imageUrl);
@@ -82,7 +83,12 @@ function render() {
         ` : ""}
       </article>
     `;
-  }).join("");
+  };
+
+  const sections = [];
+  if (upcoming.length) sections.push('<section class="agenda-wp-section"><h2 class="agenda-wp-section-title">Aankomende optredens</h2><div class="agenda-wp-list agenda-wp-section-list">' + upcoming.map(renderEvent).join("") + '</div></section>');
+  if (!futureOnly.checked && pastEvents.length) sections.push('<section class="agenda-wp-section agenda-wp-past-section"><h2 class="agenda-wp-section-title">Optredens die geweest zijn</h2><div class="agenda-wp-list agenda-wp-section-list">' + pastEvents.map(renderEvent).join("") + '</div></section>');
+  list.innerHTML = sections.join("");
 
   list.querySelectorAll(".agenda-wp-expand").forEach(button => {
     button.addEventListener("click", () => {
