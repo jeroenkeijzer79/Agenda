@@ -58,7 +58,7 @@ function render() {
   list.innerHTML = events.map(e => {
     const f = fmt(e.date);
     const past = isPast(e);
-    const hasDetails = !!(e.description || e.imageUrl || e.url);
+    const hasDetails = !!(e.description || e.url);
 
     return `
       <article class="event${past ? " past" : ""}">
@@ -66,31 +66,6 @@ function render() {
           <span class="event-day">${esc(f.day)}</span>
           <span class="event-month">${esc(f.month)}</span>
         </div>
-
-        ${e.imageUrl
-          ? `<img class="event-thumb" src="${esc(e.imageUrl)}" alt="" loading="lazy">`
-          : '<div class="event-thumb event-thumb-empty"></div>'}
-
-        <div class="event-main">
-          <div class="event-time">${esc(e.time || "")}</div>
-          <p class="event-name">${esc(e.name || "")}</p>
-          <p class="event-location">${esc(e.location || "")}</p>
-        </div>
-
-        ${hasDetails ? `
-          <button class="event-expand" type="button"
-            aria-expanded="false" aria-label="Meer informatie tonen">
-            <span class="event-arrow">⌄</span>
-          </button>
-
-          <div class="event-details" hidden>
-            <div class="event-details-inner">
-              ${e.description
-                ? `<div class="event-description">${esc(e.description).replace(/\n/g,"<br>")}</div>`
-                : ""}
-              ${e.imageUrl
-                ? `<img class="event-image" src="${esc(e.imageUrl)}" alt="" loading="lazy">`
-                : ""}
               ${e.url
                 ? `<a class="event-link" href="${esc(e.url)}" target="_blank" rel="noopener">Meer informatie ↗</a>`
                 : ""}
