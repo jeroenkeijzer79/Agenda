@@ -70,7 +70,7 @@ h2{margin:0;font-size:20px}
 
 /* Embedded agenda */
 .embed-page .embed-filter{margin:-2px 0 14px}
-.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr) 28px}
+.embed-page .event{grid-template-columns:44px 100px minmax(0,1fr) 28px}
 .embed-page .event-expand{width:28px;height:28px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer;transition:background-color .15s ease}
 .embed-page .event-expand:hover{background:#eee}
 .embed-page .event-arrow{display:block;font-size:22px;line-height:1;opacity:.55;transition:transform .25s ease}
@@ -80,7 +80,7 @@ h2{margin:0;font-size:20px}
 .embed-page .event-expand[aria-expanded="true"] + .event-details{margin-top:4px;padding-top:12px;border-top:1px solid #ddd}
 .embed-page .event-description{font-size:14px;line-height:1.6;font-weight:400;overflow-wrap:anywhere}
 .embed-page .event-link{display:inline-block;margin-top:12px}
-@media(max-width:600px){.embed-page .event{grid-template-columns:44px minmax(0,1fr) 28px}}
+@media(max-width:600px){.embed-page .event{grid-template-columns:44px 100px minmax(0,1fr) 28px}}
 
 .event-image{display:block;width:100%;max-width:520px;height:auto;margin:0 0 12px;border-radius:8px;object-fit:cover}
 .embed-page .event-image{max-width:100%;margin:0 0 10px;border-radius:6px}
@@ -98,7 +98,7 @@ h2{margin:0;font-size:20px}
 .map-panel .form-heading{padding:18px 18px 0}
 .map-panel .map-attribution{margin:0;padding:8px 18px 12px;font-size:10px;color:#777}
 
-.embed-page .event-thumb{width:40px;height:40px;overflow:hidden;border-radius:6px;background:#eee;display:flex;align-items:center;justify-content:center}
+.embed-page .event-thumb{width:100px;height:100px;overflow:hidden;border-radius:6px;background:#eee;display:flex;align-items:center;justify-content:center}
 .embed-page .event-thumb img{display:block;width:100%;height:100%;object-fit:cover}
 
 .event-section{margin:0 0 20px}.event-section-title{margin:0 0 8px;padding:0 2px;font-size:15px;line-height:1.3}.past-section .event-section-title{opacity:.6}.event-section-list{margin:0}
