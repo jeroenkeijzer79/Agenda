@@ -62,3 +62,9 @@ h2{margin:0;font-size:20px}
 .event-details{margin-top:12px;padding-top:12px;border-top:1px solid #ddd}
 .event-image{display:block;width:min(100%,520px);max-height:360px;object-fit:cover;border-radius:8px;margin-bottom:12px}
 .event-description{font-size:14px;line-height:1.6;font-weight:400;white-space:normal;overflow-wrap:anywhere}
+
+.filter-checkbox{display:flex;align-items:center;gap:8px;margin:-2px 0 14px;font-size:13px;font-weight:700}
+.filter-checkbox input{width:16px;height:16px}
+.event-name{margin:0 0 2px;font-weight:700}
+.event.past{opacity:.48}
+.event.past:hover{opacity:.7}
