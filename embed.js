@@ -70,7 +70,7 @@ function render() {
         <div class="event-main">
           <div class="event-time">${esc(e.time || "")}</div>
           <p class="event-name">${esc(e.name || "")}</p>
-          <p class="event-location">${esc(e.location || "")}</p>
+          <p class="event-location">${esc(e.location || "")}${e.place ? " · " + esc(e.place) : ""}</p>
         </div>
 
         ${hasDetails ? `
