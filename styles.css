@@ -60,7 +60,7 @@ h2{margin:0;font-size:20px}
 .event-details{margin-top:12px;padding-top:12px;border-top:1px solid #ddd}
 .event-description{font-size:14px;line-height:1.6;font-weight:400;white-space:normal;overflow-wrap:anywhere}
 
-.filter-checkbox{display:flex;align-items:center;gap:8px;margin:-2px 0 14px;font-size:13px;font-weight:700}
+.filter-checkbox{display:flex;align-items:center;gap:8px;margin:-2px 0 14px;padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-weight:700}
 .filter-checkbox input{width:16px;height:16px}
 .event-name{margin:0 0 2px;font-weight:700}
 .event.past{opacity:.48}
