@@ -68,3 +68,18 @@ h2{margin:0;font-size:20px}
 .event-name{margin:0 0 2px;font-weight:700}
 .event.past{opacity:.48}
 .event.past:hover{opacity:.7}
+
+/* Embedded agenda */
+.embed-page .embed-filter{margin:-2px 0 14px}
+.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr) 28px}
+.embed-page .event-expand{width:28px;height:28px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer;transition:background-color .15s ease}
+.embed-page .event-expand:hover{background:#eee}
+.embed-page .event-arrow{display:block;font-size:22px;line-height:1;opacity:.55;transition:transform .25s ease}
+.embed-page .event-expand[aria-expanded="true"] .event-arrow{transform:translateY(2px)}
+.embed-page .event-details{grid-column:1/-1;max-height:0;overflow:hidden;opacity:0;margin-top:0;padding-top:0;border-top:0;transition:max-height .35s ease,opacity .25s ease,margin-top .35s ease,padding-top .35s ease}
+.embed-page .event-details-inner{padding:0 4px 4px}
+.embed-page .event-expand[aria-expanded="true"] + .event-details{margin-top:4px;padding-top:12px;border-top:1px solid #ddd}
+.embed-page .event-image{display:block;width:min(100%,520px);max-height:360px;object-fit:cover;border-radius:8px;margin:12px 0}
+.embed-page .event-description{font-size:14px;line-height:1.6;font-weight:400;overflow-wrap:anywhere}
+.embed-page .event-link{display:inline-block;margin-top:12px}
+@media(max-width:600px){.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr) 28px}}
