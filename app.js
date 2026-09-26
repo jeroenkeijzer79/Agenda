@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -24,7 +24,7 @@ function resetForm(){editingId=null;$("event-form").reset();$("form-title").text
 function startEdit(e){if(!e)return;editingId=e.id;$("form-title").textContent="Optreden wijzigen";$("event-date").value=e.date||"";$("event-time").value=e.time||"";$("event-location").value=e.location||"";$("event-url").value=e.url||"";$("event-form").hidden=false;$("event-form").scrollIntoView({behavior:"smooth",block:"nearest"})}
 async function removeEvent(id){if(!confirm("Dit optreden verwijderen?"))return;try{await deleteDoc(doc(db,"optredens",id))}catch(e){show("app-error",e.message)}}
 
-$("google-login").addEventListener("click",async ()=>{show("auth-error","");try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(err){console.error("Google login error:",err);const messages={"auth/popup-blocked":"De browser blokkeert de Google-login. Sta pop-ups toe voor deze website en probeer opnieuw.","auth/popup-closed-by-user":"Het Google-loginvenster is gesloten voordat het inloggen klaar was.","auth/unauthorized-domain":"Deze website is nog niet toegestaan in Firebase Authentication. Voeg jeroenkeijzer79.github.io toe aan de geautoriseerde domeinen in Firebase.","auth/operation-not-allowed":"Google-login is nog niet ingeschakeld in Firebase Authentication."};show("auth-error",messages[err.code]||("Inloggen met Google mislukt: "+(err.message||err.code||"onbekende fout")))} });
+$("google-login").addEventListener("click",async ()=>{show("auth-error","");$("google-login").disabled=true;$("google-login").textContent="Verbinden met Google…";try{await signInWithRedirect(auth,new GoogleAuthProvider())}catch(err){console.error("Google login error:",err);$("google-login").disabled=false;$("google-login").textContent="Inloggen met Google";const messages={"auth/unauthorized-domain":"Deze website is nog niet toegestaan in Firebase Authentication. Voeg jeroenkeijzer79.github.io toe aan de geautoriseerde domeinen in Firebase.","auth/operation-not-allowed":"Google-login is nog niet ingeschakeld in Firebase Authentication."};show("auth-error",messages[err.code]||("Inloggen met Google mislukt: "+(err.message||err.code||"onbekende fout")))}});
 $("logout").onclick=()=>signOut(auth);
 $("new-event").onclick=()=>{$("event-form").hidden=false;$("form-title").textContent="Nieuw optreden";editingId=null;$("event-form").reset()};
 $("cancel-event").onclick=resetForm;$("cancel-event-2").onclick=resetForm;
