@@ -1,12 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
+import { showAgendaMap } from "./map.js";
 
 const root = document.getElementById("agenda-wordpress");
 if (!root) throw new Error("Agenda container #agenda-wordpress ontbreekt.");
 
 const list = root.querySelector(".agenda-wp-list");
 const futureOnly = root.querySelector(".agenda-wp-future");
+const mapButton = root.querySelector(".agenda-wp-map-button");
 const db = getFirestore(initializeApp(firebaseConfig));
 
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
@@ -113,6 +115,8 @@ function render() {
   });
 }
 
+mapButton?.addEventListener("click",async()=>{const panel=root.querySelector(".agenda-wp-map-panel");panel.hidden=false;await showAgendaMap(root.querySelector(".agenda-wp-map"),allEvents);});
+root.querySelector(".agenda-wp-map-close")?.addEventListener("click",()=>root.querySelector(".agenda-wp-map-panel").hidden=true);
 futureOnly.addEventListener("change", render);
 const eventsQuery = query(collection(db, "optredens"), orderBy("date"));
 
