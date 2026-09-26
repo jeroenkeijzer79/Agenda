@@ -1,6 +1,6 @@
 #agenda-wordpress{width:100%;box-sizing:border-box}
 #agenda-wordpress,#agenda-wordpress *{box-sizing:border-box}
-#agenda-wordpress .agenda-wp-filter{display:flex;align-items:center;gap:8px;margin:0 0 14px;padding:0;font-size:13px;line-height:1.4;font-weight:700}
+#agenda-wordpress .agenda-wp-filter{display:flex;align-items:center;gap:8px;margin:0 0 14px;padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;line-height:1.4;font-weight:700}
 #agenda-wordpress .agenda-wp-filter input{width:16px;height:16px;min-width:16px;margin:0;padding:0}
 #agenda-wordpress .agenda-wp-list{display:grid;gap:8px;width:100%;margin:0;padding:0}
 #agenda-wordpress .agenda-wp-item{display:grid;grid-template-columns:52px minmax(0,1fr) 30px;gap:10px;align-items:center;width:100%;margin:0;padding:9px 10px;background:#fff;border:1px solid #ddd;border-radius:8px;color:#171717;font-family:inherit;line-height:1.2;text-align:left;transition:background-color .15s ease,opacity .15s ease}
