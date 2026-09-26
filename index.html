@@ -29,8 +29,9 @@
     <div class="form-grid">
       <label>Datum<input id="event-date" type="date" required></label>
       <label>Tijd<input id="event-time" type="time" required></label>
+      <label class="full">Naam evenement<input id="event-name" type="text" placeholder="Bijv. Zomerfeest" required></label>
       <label class="full">Locatie<input id="event-location" type="text" placeholder="Bijv. Café De Zon, Hengelo" required></label>
-      <label class="full">URL<input id="event-url" type="url" placeholder="https://..." required></label>
+      <label class="full">URL (optioneel)<input id="event-url" type="url" placeholder="https://..."></label>
       <label class="full">Beschrijving<textarea id="event-description" rows="7" placeholder="Lange beschrijving van het optreden..."></textarea></label>
       <label class="full">Afbeelding<input id="event-image" type="file" accept="image/*"><span id="image-current" class="field-hint"></span></label>
       <div class="form-actions full"><button id="save-event" class="primary-button" type="submit">Opslaan</button><button id="cancel-event-2" class="secondary-button" type="button">Annuleren</button></div>
@@ -38,12 +39,13 @@
   </form>
   <section>
     <div class="section-heading"><h2>Optredens</h2><span id="event-count" class="count"></span></div>
+    <label class="filter-checkbox"><input id="future-only" type="checkbox"> Alleen toekomstige optredens</label>
     <div id="event-list" class="event-list"></div>
   </section>
   <p id="app-error" class="error" hidden></p>
 </section>
 </main>
-<footer class="version">v1.3</footer>
-<script type="module" src="app.js?v=4"></script>
+<footer class="version">v1.4</footer>
+<script type="module" src="app.js?v=5"></script>
 </body>
 </html>
