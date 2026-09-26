@@ -39,7 +39,7 @@ h2{margin:0;font-size:20px}
 .message{padding:14px;text-align:center;color:#777;font-size:13px}
 .version{margin:0 0 24px;text-align:center;font-size:11px;color:#999;opacity:.7}
 .embed-page{background:transparent}
-.embed-page .event{grid-template-columns:44px minmax(0,1fr);gap:10px;padding:7px 10px;background:#fff;border:1px solid #ddd;border-radius:8px}
+.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr);gap:10px;padding:7px 10px;background:#fff;border:1px solid #ddd;border-radius:8px}
 .embed-page .event-actions{display:none}
 .embed-page .event-day{font-size:18px}.embed-page .event-month{font-size:9px}.embed-page .event-time{font-size:11px}.embed-page .event-name{font-size:14px}.embed-page .event-location{font-size:12px;font-weight:400;opacity:.65}
 @media(max-width:600px){
@@ -68,7 +68,7 @@ h2{margin:0;font-size:20px}
 
 /* Embedded agenda */
 .embed-page .embed-filter{margin:-2px 0 14px}
-.embed-page .event{grid-template-columns:44px minmax(0,1fr) 28px}
+.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr) 28px}
 .embed-page .event-expand{width:28px;height:28px;display:flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer;transition:background-color .15s ease}
 .embed-page .event-expand:hover{background:#eee}
 .embed-page .event-arrow{display:block;font-size:22px;line-height:1;opacity:.55;transition:transform .25s ease}
@@ -95,3 +95,6 @@ h2{margin:0;font-size:20px}
 .map-panel{padding:0;overflow:hidden}
 .map-panel .form-heading{padding:18px 18px 0}
 .map-panel .map-attribution{margin:0;padding:8px 18px 12px;font-size:10px;color:#777}
+
+.embed-page .event-thumb{width:40px;height:40px;overflow:hidden;border-radius:6px;background:#eee;display:flex;align-items:center;justify-content:center}
+.embed-page .event-thumb img{display:block;width:100%;height:100%;object-fit:cover}
