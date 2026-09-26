@@ -40,7 +40,7 @@ function render() {
   list.innerHTML = events.map(event => {
     const date = formatDate(event.date);
     const past = isPast(event);
-    const hasDetails = !!(event.description || event.imageUrl || event.url);
+    const hasDetails = !!(event.description || event.url);
 
     return `
       <article class="agenda-wp-item${past ? " agenda-wp-past" : ""}">
@@ -48,30 +48,6 @@ function render() {
           <span class="agenda-wp-day">${esc(date.day)}</span>
           <span class="agenda-wp-month">${esc(date.month)}</span>
         </div>
-
-        ${event.imageUrl
-          ? `<img class="agenda-wp-thumb" src="${esc(event.imageUrl)}" alt="" loading="lazy">`
-          : '<div class="agenda-wp-thumb agenda-wp-thumb-empty" aria-hidden="true"></div>'}
-
-        <div class="agenda-wp-main">
-          <div class="agenda-wp-time">${esc(event.time || "")}</div>
-          <div class="agenda-wp-name">${esc(event.name || "")}</div>
-          <div class="agenda-wp-location">${esc(event.location || "")}</div>
-        </div>
-
-        ${hasDetails ? `
-          <button class="agenda-wp-expand" type="button" aria-expanded="false" aria-label="Meer informatie tonen">
-            <span aria-hidden="true">⌄</span>
-          </button>
-
-          <div class="agenda-wp-details" hidden>
-            <div class="agenda-wp-details-inner">
-              ${event.description
-                ? `<div class="agenda-wp-description">${esc(event.description).replace(/\n/g, "<br>")}</div>`
-                : ""}
-              ${event.imageUrl
-                ? `<img class="agenda-wp-image" src="${esc(event.imageUrl)}" alt="" loading="lazy">`
-                : ""}
               ${event.url
                 ? `<a class="agenda-wp-link" href="${esc(event.url)}" target="_blank" rel="noopener">Meer informatie ↗</a>`
                 : ""}
