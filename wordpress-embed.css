@@ -28,7 +28,7 @@
 
 #agenda-wordpress .agenda-wp-image{display:block;width:100%;max-width:520px;height:auto;margin:0 0 12px;border-radius:6px;object-fit:cover}
 
-#agenda-wordpress .agenda-wp-map-controls{width:100%;margin:0 0 14px;display:grid;grid-template-columns:minmax(0,85fr) minmax(0,15fr);align-items:stretch;gap:10px}
+#agenda-wordpress .agenda-wp-map-controls{width:100%;margin:0 0 14px;display:grid;grid-template-columns:minmax(0,85fr) minmax(0,15fr);align-items:center;gap:10px}
 #agenda-wordpress .agenda-wp-map-button{border:1px solid #ddd;border-radius:8px;background:#fff;color:#171717;padding:8px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
 #agenda-wordpress .agenda-wp-map-button:hover{background:#f5f5f5}
 #agenda-wordpress .agenda-wp-map-panel{margin:10px 0 14px;border:1px solid #ddd;border-radius:8px;overflow:hidden;background:#fff}
@@ -47,4 +47,4 @@
 
 #agenda-wordpress .agenda-wp-map-controls{display:grid;grid-template-columns:85% 15%;align-items:center;gap:10px}
 #agenda-wordpress .agenda-wp-filter{width:100%;margin:0}
-#agenda-wordpress .agenda-wp-map-button{width:100%;height:100%;margin:0;white-space:nowrap}
+#agenda-wordpress .agenda-wp-map-button{width:100%;height:auto;min-height:100%;margin:0;white-space:nowrap;align-self:stretch}
