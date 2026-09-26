@@ -50,15 +50,26 @@ export async function showAgendaMap(container,events){
   for(let i=0;i<unique.length;i++){
     const [address,e]=unique[i];
     try{
-      const p=await geocode(address);
+      let p=await geocode(address);
+
+      // Als de specifieke locatie niet gevonden wordt, probeer alleen de plaats.
+      if(!p && e.place){
+        const fallback=[e.place,"Nederland"].filter(Boolean).join(", ");
+        p=await geocode(fallback);
+      }
+
       if(p){
         const marker=L.marker([p.lat,p.lon]).addTo(map);
         const title=String(e.name||"Optreden");
         const place=[e.location,e.place].filter(Boolean).join(" · ");
         marker.bindPopup("<strong>"+escMap(title)+"</strong><br>"+escMap(place)+(e.date?"<br>"+escMap(formatMapDate(e.date)):""));
         bounds.push([p.lat,p.lon]);
+      }else{
+        console.warn("Kaartlocatie kon niet worden gevonden:",address,e.place||"");
       }
-    }catch(err){console.warn("Kaartlocatie kon niet worden gevonden:",address,err)}
+    }catch(err){
+      console.warn("Kaartlocatie kon niet worden gevonden:",address,err);
+    }
     if(i<unique.length-1)await sleep(1100);
   }
 
