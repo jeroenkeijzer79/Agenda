@@ -46,7 +46,7 @@ $("event-form").addEventListener("submit",async e=>{
  e.preventDefault();show("app-error","");
  const save=$("save-event");save.disabled=true;save.textContent="Opslaan…";
  try{
-  const data={date:$("event-date").value,time:$("event-time").value,name:$("event-name").value.trim(),location:$("event-location").value.trim(),url:$("event-url").value.trim(),description:$("event-description").value.trim(),updatedAt:Date.now()};
+  const data={date:$("event-date").value,time:$("event-time").value,name:$("event-name").value.trim(),location:$("event-location").value.trim(),place:$("event-place").value.trim(),url:$("event-url").value.trim(),description:$("event-description").value.trim(),updatedAt:Date.now()};
   if(editingId)await updateDoc(doc(db,"optredens",editingId),data);else await addDoc(collection(db,"optredens"),{...data,createdAt:Date.now()});
   resetForm();
  }catch(err){show("app-error",err.message)}finally{save.disabled=false;save.textContent="Opslaan"}
