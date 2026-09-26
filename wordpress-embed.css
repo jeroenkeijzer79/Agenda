@@ -1,4 +1,4 @@
-#agenda-wordpress{width:100%;box-sizing:border-box}
+#agenda-wordpress{width:100%;box-sizing:border-box;font-family:inherit}
 #agenda-wordpress,#agenda-wordpress *{box-sizing:border-box}
 #agenda-wordpress .agenda-wp-filter{display:flex;align-items:center;gap:8px;margin:0 0 14px;padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;line-height:1.4;font-weight:700}
 #agenda-wordpress .agenda-wp-filter input{width:16px;height:16px;min-width:16px;margin:0;padding:0}
