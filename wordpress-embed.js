@@ -28,9 +28,7 @@ const isPast = event => event.date && new Date(
 let allEvents = [];
 
 function render() {
-  const events = futureOnly.checked
-    ? allEvents.filter(event => !isPast(event))
-    : allEvents;
+  const events = futureOnly.checked ? allEvents.filter(event => !isPast(event)) : allEvents;
 
   if (!events.length) {
     list.innerHTML = '<div class="agenda-wp-message">Geen optredens gepland.</div>';
@@ -48,6 +46,23 @@ function render() {
           <span class="agenda-wp-day">${esc(date.day)}</span>
           <span class="agenda-wp-month">${esc(date.month)}</span>
         </div>
+
+        <div class="agenda-wp-main">
+          <div class="agenda-wp-time">${esc(event.time || "")}</div>
+          <div class="agenda-wp-name">${esc(event.name || "")}</div>
+          <div class="agenda-wp-location">${esc(event.location || "")}</div>
+        </div>
+
+        ${hasDetails ? `
+          <button class="agenda-wp-expand" type="button" aria-expanded="false" aria-label="Meer informatie tonen">
+            <span aria-hidden="true">⌄</span>
+          </button>
+
+          <div class="agenda-wp-details" hidden>
+            <div class="agenda-wp-details-inner">
+              ${event.description
+                ? `<div class="agenda-wp-description">${esc(event.description).replace(/\n/g, "<br>")}</div>`
+                : ""}
               ${event.url
                 ? `<a class="agenda-wp-link" href="${esc(event.url)}" target="_blank" rel="noopener">Meer informatie ↗</a>`
                 : ""}
@@ -96,16 +111,11 @@ function render() {
 }
 
 futureOnly.addEventListener("change", render);
-
 const eventsQuery = query(collection(db, "optredens"), orderBy("date"));
 
 onSnapshot(eventsQuery, snapshot => {
-  allEvents = snapshot.docs
-    .map(doc => ({ id: doc.id, ...doc.data() }))
-    .sort((a, b) => {
-      const dateCompare = (a.date || "").localeCompare(b.date || "");
-      return dateCompare || (a.time || "").localeCompare(b.time || "");
-    });
+  allEvents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    .sort((a,b) => (a.date || "").localeCompare(b.date || "") || (a.time || "").localeCompare(b.time || ""));
   render();
 }, error => {
   console.error("Agenda load error:", error);
