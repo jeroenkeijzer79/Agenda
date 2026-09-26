@@ -11,6 +11,10 @@ const futureOnly = root.querySelector(".agenda-wp-future");
 const mapControls=document.createElement("div");
 mapControls.className="agenda-wp-map-controls";
 mapControls.innerHTML='<button type="button" class="agenda-wp-map-button">Kaart</button><div class="agenda-wp-map-panel" hidden><div class="agenda-wp-map-heading"><strong>Alle optredens op de kaart</strong><button type="button" class="agenda-wp-map-close" aria-label="Sluiten">×</button></div><div class="agenda-wp-map"></div></div>';
+const filterLabel = futureOnly?.closest(".agenda-wp-filter");
+if (filterLabel) {
+  mapControls.insertBefore(filterLabel, mapControls.firstChild);
+}
 root.insertBefore(mapControls,list);
 const mapButton = mapControls.querySelector(".agenda-wp-map-button");
 const db = getFirestore(initializeApp(firebaseConfig));
