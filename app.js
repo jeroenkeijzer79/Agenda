@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
+import { showAgendaMap } from "./map.js";
 
 const $=id=>document.getElementById(id);
 const app=initializeApp(firebaseConfig);
@@ -22,7 +23,7 @@ function render(events){
   const f=formatDate(e.date);
   const details=(e.description||e.imageUrl)?'<div class="event-details" hidden>'+(e.imageUrl?'<img class="event-image" src="'+esc(e.imageUrl)+'" alt="" loading="lazy">':"")+(e.description?'<div class="event-description">'+esc(e.description).replace(/\n/g,"<br>")+'</div>':"")+'</div>':"";
   const toggle=details?'<button class="event-toggle" data-toggle type="button">Meer tonen ↓</button>':'';
-  return '<article class="event'+(isPast(e)?" past":"")+'"><div class="event-date"><span class="event-day">'+esc(f.day)+'</span><span class="event-month">'+esc(f.month)+'</span></div><div class="event-main"><div class="event-time">'+esc(e.time||"")+'</div><p class="event-name">'+esc(e.name||"")+'</p><p class="event-location">'+esc(e.location||"")+'</p>'+(e.url?'<a class="event-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Meer informatie ↗</a>':'')+toggle+details+'</div><div class="event-actions"><button class="small-button" data-edit="'+esc(e.id)+'" type="button" aria-label="Bewerken">✎</button><button class="small-button" data-delete="'+esc(e.id)+'" type="button" aria-label="Verwijderen">🗑</button></div></article>'
+  return '<article class="event'+(isPast(e)?" past":"")+'"><div class="event-date"><span class="event-day">'+esc(f.day)+'</span><span class="event-month">'+esc(f.month)+'</span></div><div class="event-main"><div class="event-time">'+esc(e.time||"")+'</div><p class="event-name">'+esc(e.name||"")+'</p><p class="event-location">'+esc(e.location||"")+(e.place?" · "+esc(e.place):"")+'</p>'+(e.url?'<a class="event-link" href="'+esc(e.url)+'" target="_blank" rel="noopener">Meer informatie ↗</a>':'')+toggle+details+'</div><div class="event-actions"><button class="small-button" data-edit="'+esc(e.id)+'" type="button" aria-label="Bewerken">✎</button><button class="small-button" data-delete="'+esc(e.id)+'" type="button" aria-label="Verwijderen">🗑</button></div></article>'
  }).join("");
  list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>startEdit(events.find(e=>e.id===b.dataset.edit)));
  list.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>removeEvent(b.dataset.delete));
@@ -57,6 +58,8 @@ async function removeEvent(id){
 $("new-event").onclick=()=>{$("event-form").hidden=false;$("form-title").textContent="Nieuw optreden";editingId=null;$("event-form").reset()};
 $("cancel-event").onclick=resetForm;$("cancel-event-2").onclick=resetForm;
 $("future-only").addEventListener("change",()=>render(allEvents));
+$("show-map").onclick=async()=>{const panel=$("map-panel");panel.hidden=false;await showAgendaMap($("agenda-map"),allEvents);};
+$("close-map").onclick=()=>$("map-panel").hidden=true;
 
 $("event-form").addEventListener("submit",async e=>{
  e.preventDefault();show("app-error","");
