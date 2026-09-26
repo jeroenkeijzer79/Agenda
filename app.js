@@ -57,28 +57,66 @@ $("event-form").addEventListener("submit",async e=>{
    const imageRef=ref(storage,imagePath);
 
    save.textContent="Afbeelding uploaden… 0%";
+   save.textContent="Firebase Storage controleren…";
+
    const uploadTask=uploadBytesResumable(imageRef,file,{contentType:file.type});
+   let uploadStarted=false;
+   let lastState="";
 
    await new Promise((resolve,reject)=>{
+    let settled=false;
+    const finishError=error=>{
+      if(settled)return;
+      settled=true;
+      clearTimeout(timeout);
+      console.error("Image upload error:",error);
+      const code=error?.code||"storage/unknown";
+      const detail=error?.serverResponse||error?.message||"onbekende fout";
+      const messages={
+       "storage/unauthorized":"Geen toestemming om de afbeelding op te slaan. Controleer de actieve Firebase Storage-regels.",
+       "storage/unauthenticated":"Firebase Storage vraagt om authenticatie.",
+       "storage/bucket-not-found":"De Firebase Storage-bucket bestaat niet of is niet correct ingesteld.",
+       "storage/project-not-found":"Het Firebase-project voor Storage kon niet worden gevonden.",
+       "storage/quota-exceeded":"De Firebase Storage-opslaglimiet is bereikt.",
+       "storage/retry-limit-exceeded":"De verbinding met Firebase Storage blijft mislukken.",
+       "storage/network-request-failed":"De verbinding met Firebase Storage is mislukt. Controleer internet, browserextensies en netwerkblokkades.",
+       "storage/canceled":"De afbeelding-upload is geannuleerd."
+      };
+      reject(new Error((messages[code]||("Afbeelding uploaden mislukt ("+code+"). "+detail))));
+    };
+    const timeout=setTimeout(()=>{
+      try{uploadTask.cancel()}catch(_){}
+      finishError(new Error("Firebase Storage reageert niet. De upload bleef langer dan 30 seconden op 0%. Controleer of Cloud Storage is geactiveerd en of de actieve Storage-regels schrijven toestaan."));
+    },30000);
+
     uploadTask.on("state_changed",
      snapshot=>{
+      uploadStarted=true;
+      lastState=snapshot.state;
       const percent=Math.round((snapshot.bytesTransferred/snapshot.totalBytes)*100);
       save.textContent="Afbeelding uploaden… "+percent+"%";
+      console.log("Firebase Storage upload:",{
+       state:snapshot.state,
+       bytesTransferred:snapshot.bytesTransferred,
+       totalBytes:snapshot.totalBytes,
+       percent
+      });
      },
-     error=>{
-      console.error("Image upload error:",error);
-      const messages={
-       "storage/unauthorized":"Geen toestemming om de afbeelding op te slaan. Controleer de Firebase Storage-regels.",
-       "storage/canceled":"De afbeelding-upload is geannuleerd.",
-       "storage/object-not-found":"De Storage-locatie voor de afbeelding kon niet worden gevonden.",
-       "storage/quota-exceeded":"De Firebase Storage-opslaglimiet is bereikt.",
-       "storage/retry-limit-exceeded":"De afbeelding kon na meerdere pogingen niet worden geüpload.",
-       "storage/network-request-failed":"De verbinding met Firebase Storage is mislukt. Controleer je internetverbinding."
-      };
-      reject(new Error(messages[error.code]||("Afbeelding uploaden mislukt: "+(error.message||error.code||"onbekende fout"))));
-     },
-     resolve
+     finishError,
+     ()=>{
+      if(settled)return;
+      settled=true;
+      clearTimeout(timeout);
+      resolve();
+     }
     );
+
+    console.log("Firebase Storage upload gestart:",{
+     bucket:firebaseConfig.storageBucket,
+     path:imagePath,
+     size:file.size,
+     type:file.type
+    });
    });
 
    save.textContent="Afbeelding verwerken…";
