@@ -34,8 +34,8 @@ const isPast = event => event.date && new Date(
 let allEvents = [];
 
 function render() {
-  const upcoming = allEvents.filter(event => !isPast(event));
-  const pastEvents = allEvents.filter(event => isPast(event));
+  const upcoming = allEvents.filter(event => !isPast(event)).sort((a,b) => (a.date || "").localeCompare(b.date || "") || (a.time || "").localeCompare(b.time || ""));
+  const pastEvents = allEvents.filter(event => isPast(event)).sort((a,b) => (b.date || "").localeCompare(a.date || "") || (b.time || "").localeCompare(a.time || ""));
 
   if (!upcoming.length && (!pastEvents.length || futureOnly.checked)) {
     list.innerHTML = '<div class="agenda-wp-message">Geen optredens gepland.</div>';
