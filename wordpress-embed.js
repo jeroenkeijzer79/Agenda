@@ -38,7 +38,7 @@ function render() {
   list.innerHTML = events.map(event => {
     const date = formatDate(event.date);
     const past = isPast(event);
-    const hasDetails = !!(event.description || event.url);
+    const hasDetails = !!(event.description || event.url || event.imageUrl);
 
     return `
       <article class="agenda-wp-item${past ? " agenda-wp-past" : ""}">
@@ -60,6 +60,9 @@ function render() {
 
           <div class="agenda-wp-details" hidden>
             <div class="agenda-wp-details-inner">
+              ${event.imageUrl
+                ? `<img class="agenda-wp-image" src="${esc(event.imageUrl)}" alt="" loading="lazy">`
+                : ""}
               ${event.description
                 ? `<div class="agenda-wp-description">${esc(event.description).replace(/\n/g, "<br>")}</div>`
                 : ""}
