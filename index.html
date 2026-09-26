@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agenda</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<p class="eyebrow">Agenda</p>
+<h1>Optredens</h1>
+<p class="muted">Beheer de agenda met optredens.</p>
+</header>
+<div id="auth-view" class="panel">
+  <h2>Beheer</h2>
+  <p class="muted">Log in om optredens te beheren.</p>
+  <form id="login-form" class="form-grid">
+    <label>E-mail<input id="email" type="email" autocomplete="username" required></label>
+    <label>Wachtwoord<input id="password" type="password" autocomplete="current-password" required></label>
+    <button class="primary-button" type="submit">Inloggen</button>
+  </form>
+  <p id="auth-error" class="error" hidden></p>
+</div>
+<section id="admin-view" hidden>
+  <div class="toolbar">
+    <button id="new-event" class="primary-button" type="button">+ Nieuw optreden</button>
+    <button id="logout" class="secondary-button" type="button">Uitloggen</button>
+  </div>
+  <form id="event-form" class="panel" hidden>
+    <div class="form-heading"><h2 id="form-title">Nieuw optreden</h2><button id="cancel-event" class="icon-button" type="button" aria-label="Annuleren">×</button></div>
+    <div class="form-grid">
+      <label>Datum<input id="event-date" type="date" required></label>
+      <label>Tijd<input id="event-time" type="time" required></label>
+      <label class="full">Locatie<input id="event-location" type="text" placeholder="Bijv. Café De Zon, Hengelo" required></label>
+      <label class="full">URL<input id="event-url" type="url" placeholder="https://..." required></label>
+      <div class="form-actions full"><button id="save-event" class="primary-button" type="submit">Opslaan</button><button id="cancel-event-2" class="secondary-button" type="button">Annuleren</button></div>
+    </div>
+  </form>
+  <section>
+    <div class="section-heading"><h2>Optredens</h2><span id="event-count" class="count"></span></div>
+    <div id="event-list" class="event-list"></div>
+  </section>
+  <p id="app-error" class="error" hidden></p>
+</section>
+</main>
+<footer class="version">v1.0</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>
