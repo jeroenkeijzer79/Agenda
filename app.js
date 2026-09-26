@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { firebaseConfig } from "./firebase-config.js";
 
@@ -24,7 +24,7 @@ function resetForm(){editingId=null;$("event-form").reset();$("form-title").text
 function startEdit(e){if(!e)return;editingId=e.id;$("form-title").textContent="Optreden wijzigen";$("event-date").value=e.date||"";$("event-time").value=e.time||"";$("event-location").value=e.location||"";$("event-url").value=e.url||"";$("event-form").hidden=false;$("event-form").scrollIntoView({behavior:"smooth",block:"nearest"})}
 async function removeEvent(id){if(!confirm("Dit optreden verwijderen?"))return;try{await deleteDoc(doc(db,"optredens",id))}catch(e){show("app-error",e.message)}}
 
-$("login-form").addEventListener("submit",async e=>{e.preventDefault();show("auth-error","");try{await signInWithEmailAndPassword(auth,$("email").value,$("password").value)}catch(err){show("auth-error","Inloggen mislukt. Controleer e-mail en wachtwoord.")}});
+$("google-login").addEventListener("click",async ()=>{show("auth-error","");try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(err){show("auth-error","Inloggen met Google mislukt. Probeer het opnieuw.")}});
 $("logout").onclick=()=>signOut(auth);
 $("new-event").onclick=()=>{$("event-form").hidden=false;$("form-title").textContent="Nieuw optreden";editingId=null;$("event-form").reset()};
 $("cancel-event").onclick=resetForm;$("cancel-event-2").onclick=resetForm;
