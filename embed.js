@@ -6,6 +6,27 @@ const db = getFirestore(initializeApp(firebaseConfig));
 const list = document.getElementById("event-list");
 const futureOnly = document.getElementById("future-only");
 
+function sendHeight() {
+  const height = Math.ceil(document.documentElement.scrollHeight);
+  window.parent.postMessage({ type: "agenda-height", height }, "*");
+}
+
+function observeHeight() {
+  if (!window.ResizeObserver) {
+    window.addEventListener("load", sendHeight);
+    window.addEventListener("resize", sendHeight);
+    return;
+  }
+  const observer = new ResizeObserver(sendHeight);
+  observer.observe(document.body);
+  observer.observe(document.documentElement);
+}
+
+window.addEventListener("load", () => {
+  observeHeight();
+  sendHeight();
+});
+
 const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({
   "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
 }[c]));
@@ -118,9 +139,14 @@ function render() {
       }
     });
   });
+
+  requestAnimationFrame(sendHeight);
 }
 
-futureOnly?.addEventListener("change", render);
+futureOnly?.addEventListener("change", () => {
+  render();
+  requestAnimationFrame(sendHeight);
+});
 
 const q = query(collection(db, "optredens"), orderBy("date"));
 
