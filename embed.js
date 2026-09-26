@@ -47,8 +47,8 @@ const isPast = e => e.date && new Date(
 let allEvents = [];
 
 function render() {
-  const upcoming = allEvents.filter(e => !isPast(e));
-  const pastEvents = allEvents.filter(e => isPast(e));
+  const upcoming = allEvents.filter(e => !isPast(e)).sort((a,b) => (a.date || "").localeCompare(b.date || "") || (a.time || "").localeCompare(b.time || ""));
+  const pastEvents = allEvents.filter(e => isPast(e)).sort((a,b) => (b.date || "").localeCompare(a.date || "") || (b.time || "").localeCompare(a.time || ""));
 
   if (!upcoming.length && (!pastEvents.length || futureOnly?.checked)) {
     list.innerHTML = '<div class="message">Geen optredens gepland.</div>';
