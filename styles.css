@@ -39,9 +39,9 @@ h2{margin:0;font-size:20px}
 .message{padding:14px;text-align:center;color:#777;font-size:13px}
 .version{margin:0 0 24px;text-align:center;font-size:11px;color:#999;opacity:.7}
 .embed-page{background:transparent}
-.embed-page .event{grid-template-columns:64px minmax(0,1fr);padding:8px 10px}
-.embed-page .event-actions{display:none}
-.embed-page .event-day{font-size:22px}
+.embed-page .event{grid-template-columns:44px 40px minmax(0,1fr);gap:10px;padding:7px 10px;background:#fff;border:1px solid #ddd;border-radius:8px}
+.embed-page .event-actions{display:none}.embed-page .event-thumb{width:40px;height:40px;object-fit:cover;border-radius:6px;display:block}.embed-page .event-thumb-empty{background:#eee}
+.embed-page .event-day{font-size:18px}.embed-page .event-month{font-size:9px}.embed-page .event-time{font-size:11px}.embed-page .event-name{font-size:14px}.embed-page .event-location{font-size:12px;font-weight:400;opacity:.65}
 @media(max-width:600px){
 .page{width:min(100% - 20px,900px);padding-top:28px}
 .form-grid{grid-template-columns:1fr}
