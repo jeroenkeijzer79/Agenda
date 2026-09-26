@@ -18,8 +18,9 @@
 <section id="admin-view">
   <div class="toolbar">
     <button id="new-event" class="primary-button" type="button">+ Nieuw optreden</button>
-    <div class="toolbar-actions"><a class="secondary-button" href="changelog.html">Changelog</a></div>
+    <div class="toolbar-actions"><button id="show-map" class="secondary-button" type="button">Kaart</button><a class="secondary-button" href="changelog.html">Changelog</a></div>
   </div>
+  <section id="map-panel" class="panel map-panel" hidden><div class="form-heading"><h2>Alle optredens op de kaart</h2><button id="close-map" class="icon-button" type="button" aria-label="Sluiten">×</button></div><div id="agenda-map" class="agenda-map"></div><p class="map-attribution">Kaartgegevens © OpenStreetMap-bijdragers</p></section>
   <form id="event-form" class="panel" hidden>
     <div class="form-heading"><h2 id="form-title">Nieuw optreden</h2><button id="cancel-event" class="icon-button" type="button" aria-label="Annuleren">×</button></div>
     <div class="form-grid">
@@ -42,7 +43,7 @@
   <p id="app-error" class="error" hidden></p>
 </section>
 </main>
-<footer class="version">v1.4.6</footer>
-<script type="module" src="app.js?v=15"></script>
+<footer class="version">v1.4.7</footer>
+<script type="module" src="app.js?v=16"></script>
 </body>
 </html>
