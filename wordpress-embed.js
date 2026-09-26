@@ -50,7 +50,7 @@ function render() {
         <div class="agenda-wp-main">
           <div class="agenda-wp-time">${esc(event.time || "")}</div>
           <div class="agenda-wp-name">${esc(event.name || "")}</div>
-          <div class="agenda-wp-location">${esc(event.location || "")}</div>
+          <div class="agenda-wp-location">${esc(event.location || "")}${event.place ? " · " + esc(event.place) : ""}</div>
         </div>
 
         ${hasDetails ? `
