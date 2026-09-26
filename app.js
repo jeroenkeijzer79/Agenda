@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 import { firebaseConfig } from "./firebase-config.js";
 
 const $=id=>document.getElementById(id);
@@ -52,8 +52,37 @@ $("event-form").addEventListener("submit",async e=>{
   if(file){
    if(!file.type.startsWith("image/"))throw new Error("Selecteer een geldige afbeelding.");
    if(file.size>8*1024*1024)throw new Error("De afbeelding mag maximaal 8 MB zijn.");
+
    imagePath="optredens/"+Date.now()+"-"+file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-   const imageRef=ref(storage,imagePath);await uploadBytes(imageRef,file);imageUrl=await getDownloadURL(imageRef);
+   const imageRef=ref(storage,imagePath);
+
+   save.textContent="Afbeelding uploaden… 0%";
+   const uploadTask=uploadBytesResumable(imageRef,file,{contentType:file.type});
+
+   await new Promise((resolve,reject)=>{
+    uploadTask.on("state_changed",
+     snapshot=>{
+      const percent=Math.round((snapshot.bytesTransferred/snapshot.totalBytes)*100);
+      save.textContent="Afbeelding uploaden… "+percent+"%";
+     },
+     error=>{
+      console.error("Image upload error:",error);
+      const messages={
+       "storage/unauthorized":"Geen toestemming om de afbeelding op te slaan. Controleer de Firebase Storage-regels.",
+       "storage/canceled":"De afbeelding-upload is geannuleerd.",
+       "storage/object-not-found":"De Storage-locatie voor de afbeelding kon niet worden gevonden.",
+       "storage/quota-exceeded":"De Firebase Storage-opslaglimiet is bereikt.",
+       "storage/retry-limit-exceeded":"De afbeelding kon na meerdere pogingen niet worden geüpload.",
+       "storage/network-request-failed":"De verbinding met Firebase Storage is mislukt. Controleer je internetverbinding."
+      };
+      reject(new Error(messages[error.code]||("Afbeelding uploaden mislukt: "+(error.message||error.code||"onbekende fout"))));
+     },
+     resolve
+    );
+   });
+
+   save.textContent="Afbeelding verwerken…";
+   imageUrl=await getDownloadURL(imageRef);
   }
   const data={date:$("event-date").value,time:$("event-time").value,name:$("event-name").value.trim(),location:$("event-location").value.trim(),url:$("event-url").value.trim(),description:$("event-description").value.trim(),imageUrl:imageUrl||"",imagePath:imagePath||"",updatedAt:Date.now()};
   if(editingId)await updateDoc(doc(db,"optredens",editingId),data);else await addDoc(collection(db,"optredens"),{...data,createdAt:Date.now()});
