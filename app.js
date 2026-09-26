@@ -1,10 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getAuth, initializeAuth, browserLocalPersistence, browserSessionPersistence, indexedDBLocalPersistence, browserPopupRedirectResolver, onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-storage.js";
 import { firebaseConfig } from "./firebase-config.js";
 
-const app=initializeApp(firebaseConfig), auth=getAuth(app), db=getFirestore(app), storage=getStorage(app);
+const app=initializeApp(firebaseConfig), auth=initializeAuth(app,{persistence:[indexedDBLocalPersistence,browserLocalPersistence,browserSessionPersistence],popupRedirectResolver:browserPopupRedirectResolver}), db=getFirestore(app), storage=getStorage(app);
 const $=id=>document.getElementById(id);
 let editingId=null, editingImageUrl="", unsubscribe=null, allEvents=[];
 
@@ -38,7 +38,7 @@ async function removeEvent(id){
  }catch(e){show("app-error",e.message)}
 }
 
-$("google-login").addEventListener("click",async ()=>{show("auth-error","");$("google-login").disabled=true;$("google-login").textContent="Verbinden met Google…";try{const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});await signInWithPopup(auth,provider)}catch(err){console.error("Google login error:",err);$("google-login").disabled=false;$("google-login").textContent="Inloggen met Google";const messages={"auth/unauthorized-domain":"Deze website is nog niet toegestaan in Firebase Authentication. Voeg jeroenkeijzer79.github.io toe aan de geautoriseerde domeinen in Firebase.","auth/operation-not-allowed":"Google-login is nog niet ingeschakeld in Firebase Authentication.","auth/popup-blocked":"De browser blokkeert het Google-loginvenster. Sta pop-ups toe voor deze website en probeer opnieuw.","auth/popup-closed-by-user":"Het Google-loginvenster is gesloten voordat het inloggen klaar was.","auth/cancelled-popup-request":"Er was al een Google-loginvenster geopend. Sluit dat venster en probeer opnieuw.","auth/web-storage-unsupported":"De browser blokkeert de benodigde browseropslag. Probeer een normaal browservenster of een andere browser."};show("auth-error",messages[err.code]||("Inloggen met Google mislukt: "+(err.message||err.code||"onbekende fout")))}});
+$("google-login").addEventListener("click",async ()=>{show("auth-error","");$("google-login").disabled=true;$("google-login").textContent="Verbinden met Google…";try{const provider=new GoogleAuthProvider();provider.setCustomParameters({prompt:"select_account"});await signInWithPopup(auth,provider,browserPopupRedirectResolver)}catch(err){console.error("Google login error:",err);$("google-login").disabled=false;$("google-login").textContent="Inloggen met Google";const messages={"auth/unauthorized-domain":"Deze website is niet toegestaan in Firebase Authentication.","auth/operation-not-allowed":"Google-login is niet ingeschakeld in Firebase Authentication.","auth/popup-blocked":"De browser blokkeert de Google-loginpopup. Sta pop-ups toe voor deze website.","auth/popup-closed-by-user":"Het Google-loginvenster is gesloten voordat het inloggen klaar was.","auth/cancelled-popup-request":"Er was al een Google-loginvenster geopend.","auth/web-storage-unsupported":"De browser blokkeert browseropslag.","auth/invalid-api-key":"De Firebase API-key is ongeldig.","auth/invalid-oauth-client-id":"De Google OAuth-client is ongeldig of verkeerd geconfigureerd."};show("auth-error",(messages[err.code]||"Inloggen met Google mislukt: "+(err.message||err.code||"onbekende fout"))+" ["+(err.code||"geen foutcode")+"]")}});
 
 $("logout").onclick=()=>signOut(auth);
 $("new-event").onclick=()=>{$("event-form").hidden=false;$("form-title").textContent="Nieuw optreden";editingId=null;editingImageUrl="";$("event-form").reset();$("image-current").textContent=""};
