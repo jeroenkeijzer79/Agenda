@@ -25,3 +25,5 @@
 #agenda-wordpress .agenda-wp-past:hover{opacity:.7}
 #agenda-wordpress .agenda-wp-message{width:100%;margin:0;padding:14px;text-align:center;font-size:13px;line-height:1.4;color:#777}
 @media(max-width:600px){#agenda-wordpress .agenda-wp-item{grid-template-columns:44px minmax(0,1fr) 28px;gap:9px;padding:8px}#agenda-wordpress .agenda-wp-day{font-size:22px}#agenda-wordpress .agenda-wp-name{font-size:14px}#agenda-wordpress .agenda-wp-location{font-size:12px}}
+
+#agenda-wordpress .agenda-wp-image{display:block;width:100%;max-width:520px;height:auto;margin:0 0 12px;border-radius:6px;object-fit:cover}
