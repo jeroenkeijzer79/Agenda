@@ -13,17 +13,12 @@
 <h1>Optredens</h1>
 <p class="muted">Beheer de agenda met optredens.</p>
 </header>
-<div id="auth-view" class="panel">
-  <h2>Beheer</h2>
-  <p class="muted">Log in om optredens te beheren.</p>
-  <button id="google-login" class="primary-button" type="button">Inloggen met Google</button>
-  <p><a class="secondary-button" href="changelog.html">Changelog</a></p>
-  <p id="auth-error" class="error" hidden></p>
+<div id="auth-view" class="panel" hidden>
 </div>
-<section id="admin-view" hidden>
+<section id="admin-view">
   <div class="toolbar">
     <button id="new-event" class="primary-button" type="button">+ Nieuw optreden</button>
-    <div class="toolbar-actions"><button id="logout" class="secondary-button" type="button">Uitloggen</button><a class="secondary-button" href="changelog.html">Changelog</a></div>
+    <div class="toolbar-actions"><a class="secondary-button" href="changelog.html">Changelog</a></div>
   </div>
   <form id="event-form" class="panel" hidden>
     <div class="form-heading"><h2 id="form-title">Nieuw optreden</h2><button id="cancel-event" class="icon-button" type="button" aria-label="Annuleren">×</button></div>
@@ -47,6 +42,6 @@
 </section>
 </main>
 <footer class="version">v1.4</footer>
-<script type="module" src="app.js?v=8"></script>
+<script type="module" src="app.js?v=9"></script>
 </body>
 </html>
