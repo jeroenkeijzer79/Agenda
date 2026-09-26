@@ -14,75 +14,21 @@
 <p class="muted">Overzicht van wijzigingen aan de Agenda-app.</p>
 </header>
 
+<section class="panel"><h2>v1.4.3</h2><ul>
+<li>Google-login tijdelijk volledig uitgeschakeld.</li>
+<li>De beheerpagina is direct toegankelijk zonder inloggen.</li>
+<li>Firestore- en Storage-regels aangepast zodat optredens en afbeeldingen zonder authenticatie kunnen worden beheerd.</li>
+<li>Cache-busting verhoogd naar <code>app.js?v=9</code>.</li>
+</ul></section>
+
 <section class="panel"><h2>v1.4.2</h2><ul><li>Google-login teruggebracht naar Firebase’s standaard <code>getAuth()</code>-initialisatie.</li><li>Extra zichtbare foutmeldingen toegevoegd voor JavaScript- en opstartfouten, zodat een probleem vóór het klikken op de login-knop direct zichtbaar wordt.</li><li>Cache-busting verhoogd naar <code>app.js?v=8</code> om zeker de actuele login-code te laden.</li></ul></section><section class="panel"><h2>v1.4.1</h2><ul><li>Firestore laden aangepast zodat een samengestelde index voor datum + tijd niet langer vereist is.</li><li>Google-login robuuster gemaakt met een expliciete accountselectie en verbeterde foutmelding.</li><li>Cache-busting verhoogd naar app.js?v=6 zodat de actuele code direct wordt geladen.</li></ul></section><section class="panel">
   <div class="section-heading"><h2>v1.4</h2><span class="count">26 september 2026</span></div>
-  <ul>
-    <li>Naam van het evenement toegevoegd naast de locatie.</li>
-    <li>De URL is nu optioneel.</li>
-    <li>Afgelopen optredens worden in een lichtere tekst weergegeven.</li>
-    <li>Checkbox toegevoegd om alleen toekomstige optredens te tonen.</li>
-    <li>Versienummer verhoogd naar v1.4.</li>
-  </ul>
+  <ul><li>Naam van het evenement toegevoegd naast de locatie.</li><li>De URL is nu optioneel.</li><li>Afgelopen optredens worden in een lichtere tekst weergegeven.</li><li>Checkbox toegevoegd om alleen toekomstige optredens te tonen.</li><li>Versienummer verhoogd naar v1.4.</li></ul>
 </section>
-
 <section class="panel">
   <div class="section-heading"><h2>v1.3</h2><span class="count">26 september 2026</span></div>
-  <ul>
-    <li>Lange beschrijving toegevoegd aan optredens.</li>
-    <li>Afbeeldingen kunnen bij een optreden worden geüpload.</li>
-    <li>Beschrijving en afbeelding zijn per optreden uitklapbaar via “Meer tonen”.</li>
-    <li>Dezelfde uitgebreide informatie is beschikbaar in de publieke agenda/embed.</li>
-    <li>Versienummer verhoogd van v1.2 naar v1.3.</li>
-  </ul>
+  <ul><li>Lange beschrijving toegevoegd aan optredens.</li><li>Afbeeldingen kunnen bij een optreden worden geüpload.</li><li>Beschrijving en afbeelding zijn per optreden uitklapbaar via “Meer tonen”.</li><li>Dezelfde uitgebreide informatie is beschikbaar in de publieke agenda/embed.</li><li>Versienummer verhoogd van v1.2 naar v1.3.</li></ul>
 </section>
-
-<section class="panel">
-  <div class="section-heading"><h2>26 september 2026</h2><span class="count">Google-login</span></div>
-  <ul>
-    <li>Google-login aangepast naar een redirect-flow.</li>
-    <li>Terugkeer uit Google wordt nu expliciet verwerkt met Firebase <code>getRedirectResult()</code>.</li>
-    <li>Fouten tijdens het terugkeren uit Google worden nu zichtbaar gemeld in de beheerpagina.</li>
-  </ul>
-</section>
-
-<section class="panel">
-  <div class="section-heading"><h2>26 september 2026</h2><span class="count">Google-login</span></div>
-  <ul>
-    <li>De Google-login gebruikt nu een popup-flow in plaats van redirect-flow, omdat de Agenda op GitHub Pages wordt gehost.</li>
-    <li>De foutmeldingen voor geblokkeerde pop-ups en browseropslag zijn uitgebreid.</li>
-  </ul>
-</section>
-
-<section class="panel">
-  <div class="section-heading"><h2>26 september 2026</h2><span class="count">Cache-busting</span></div>
-  <ul>
-    <li>De beheerpagina laadt nu een versie van <code>app.js</code> met een versienummer in de URL, zodat GitHub Pages en de browser geen oude authenticatiecode blijven gebruiken.</li>
-    <li>De actuele code gebruikt <code>signInWithPopup()</code> voor Google-login.</li>
-  </ul>
-</section>
-
-<section class="panel">
-  <div class="section-heading"><h2>v1.0</h2><span class="count">26 september 2026</span></div>
-  <ul>
-    <li>Eerste versie van de Agenda-app.</li>
-    <li>Optredens kunnen worden aangemaakt, gewijzigd en verwijderd.</li>
-    <li>Optredens worden opgeslagen in Firestore.</li>
-    <li>Google-login voor het beheer toegevoegd.</li>
-    <li>Publieke agenda via <code>embed.html</code> beschikbaar.</li>
-    <li>GitHub Pages- en WordPress-embedondersteuning toegevoegd.</li>
-  </ul>
-</section>
-
-<section class="panel">
-  <div class="section-heading"><h2>26 september 2026</h2><span class="count">Bugfixes</span></div>
-  <ul>
-    <li>Firebase-configuratie gecorrigeerd zodat <code>firebaseConfig</code> correct wordt geëxporteerd.</li>
-    <li>Google-login toont nu een concrete foutmelding wanneer Firebase de login blokkeert of de browser de popup tegenhoudt.</li>
-    <li>Changelogpagina toegevoegd.</li>
-    <li>Vanaf de beheerpagina is de changelog direct bereikbaar.</li>
-  </ul>
-</section>
-
 <p><a class="secondary-button" href="index.html">← Terug naar Agenda</a></p>
 </main>
 <footer class="version">Agenda changelog</footer>
