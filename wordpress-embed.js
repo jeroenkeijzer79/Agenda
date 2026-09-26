@@ -53,6 +53,8 @@ function render() {
           <span class="agenda-wp-month">${esc(date.month)}</span>
         </div>
 
+        <div class="agenda-wp-thumb">${event.imageUrl ? `<img src="${esc(event.imageUrl)}" alt="" loading="lazy">` : ""}</div>
+
         <div class="agenda-wp-main">
           <div class="agenda-wp-time">${esc(event.time || "")}</div>
           <div class="agenda-wp-name">${esc(event.name || "")}</div>
