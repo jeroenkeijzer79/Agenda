@@ -121,6 +121,7 @@ function render() {
         details.addEventListener("transitionend", function handler() {
           if (button.getAttribute("aria-expanded") === "true") {
             details.style.maxHeight = "none";
+            sendHeight();
           }
           details.removeEventListener("transitionend", handler);
         });
@@ -133,6 +134,7 @@ function render() {
         details.addEventListener("transitionend", function handler() {
           if (button.getAttribute("aria-expanded") === "false") {
             details.hidden = true;
+            sendHeight();
           }
           details.removeEventListener("transitionend", handler);
         });
