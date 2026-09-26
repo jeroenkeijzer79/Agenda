@@ -6,7 +6,7 @@ Agenda app for managing performances and displaying them on WordPress.
 
 This repository contains:
 - `index.html` — admin interface
-- `app.js` — Firebase Authentication + Firestore management
+- `app.js` — Google Authentication + Firestore management
 - `embed.html` — public WordPress embed page
 - `embed.js` — public Firestore reader
 - `styles.css` — SpotifyList-inspired formatting
@@ -19,8 +19,8 @@ This repository contains:
 2. Add a Web App in Firebase.
 3. Copy the Web App configuration into `firebase-config.js`.
 4. Create a Cloud Firestore database in **production/locked mode**.
-5. In Firebase Authentication, enable **Email/Password**.
-6. Create the admin user account you will use to manage the agenda.
+5. In Firebase Authentication → Sign-in method, enable **Google** as a sign-in provider.
+6. Add your Google account as the account you will use to manage the agenda. The first successful Google sign-in creates the Firebase Authentication user automatically.
 7. In Firestore Rules, paste the contents of `firestore.rules` and publish.
 8. The collection `optredens` will be created automatically when the first performance is saved.
 
@@ -71,7 +71,7 @@ Each document in `optredens` contains:
 }
 ```
 
-The public embed only reads the data. The management interface requires Firebase Authentication.
+The public embed only reads the data. The management interface requires Google Authentication through Firebase.
 
 ## Important
 
